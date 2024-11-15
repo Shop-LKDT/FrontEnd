@@ -32,20 +32,22 @@
     </thead>
     <tbody>
       <tr *ngFor="let supplier of suppliers">
-        <td>{{ supplier.supplierID }}</td>
+        <td>{{ supplier.id }}</td>
         <td>{{ supplier.name }}</td>
         <td>{{ supplier.phone }}</td>
         <td>{{ supplier.address }}</td>
         <td>{{ supplier.email }}</td>
 
         <td>
-          <a class="btn btn-sm" data-toggle="modal"
-          data-target="#editCategoryModal"><i class="ri-edit-2-line"></i></a>
-        |
-          <a class="btn btn-sm" data-toggle="modal"
-          data-target="#confirmDeleteModal" style="padding: 5px; font-size: 15px;">
-          <i class="ri-delete-bin-7-line"></i></a>
-      </td>
+          <a class="btn btn-sm" data-toggle="modal" data-target="#editCategoryModal" (click)="openEditModal(supplier)">
+            <i class="ri-edit-2-line"></i>
+          </a>
+          |
+          <a class="btn btn-sm" data-toggle="modal" data-target="#confirmDeleteModal" (click)="selectedSupplier = supplier">
+            <i class="ri-delete-bin-7-line"></i>
+          </a>
+        </td>
+
       </tr>
     </tbody>
   </table>
@@ -72,101 +74,110 @@
     <p>Không có nhà cung cấp nào.</p>
 </ng-template>
 
+<!-- Add Supplier Modal -->
+<!-- Add Supplier Modal -->
+<!-- Modal Thêm Nhà Cung Cấp -->
 <div class="modal fade" id="addCategoryModal" tabindex="-1" role="dialog" aria-labelledby="addCategoryLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h2 class="modal-title" id="addCategoryLabel">Thêm nhà cung cấp</h2>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form>
-            <div class="form-group">
-              <label for="name">Tên nhà cung cấp</label>
-              <input formControlName="name" type="text" class="form-control" id="name" placeholder="Nhập Tên nhà cung cấp" required>
-            </div>
-            <div class="form-group">
-              <label for="address">Địa chỉ nhà cung cấp</label>
-              <input formControlName="address" type="text" class="form-control" id="address" placeholder="Địa chỉ nhà cung cấp... " required>
-            </div>
-            <div class="form-group">
-              <label for="email">Email nhà cung cấp</label>
-              <input formControlName="email" type="text" class="form-control" id="email" placeholder="Email nhà cung cấp... " required>
-            </div>
-            <div class="form-group">
-              <label for="phone">Phone nhà cung cấp</label>
-              <input formControlName="phone" type="text" class="form-control" id="phone" placeholder="Phone nhà cung cấp... " required>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                <button type="submit" class="btn btn-primary" style="background: #5b5d8f;">Thêm</button>
-            </div>
-          </form>
-        </div>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="addCategoryLabel">Thêm nhà cung cấp</h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
-    </div>
-  </div>
-
-    <!-- Modal Sửa Danh Mục -->
-<div class="modal fade" id="editCategoryModal" tabindex="-1" role="dialog" aria-labelledby="editCategoryLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h2 class="modal-title" id="editCategoryLabel">Sửa nhà cung cấp</h2>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-            <form>
-              <div class="form-group">
-                <label for="name">Tên nhà cung cấp</label>
-                <input formControlName="name" type="text" class="form-control" id="name" placeholder="Nhập Tên nhà cung cấp" required>
-              </div>
-              <div class="form-group">
-                <label for="address">Địa chỉ nhà cung cấp</label>
-                <input formControlName="address" type="text" class="form-control" id="address" placeholder="Địa chỉ nhà cung cấp... " required>
-              </div>
-              <div class="form-group">
-                <label for="email">Email nhà cung cấp</label>
-                <input formControlName="email" type="text" class="form-control" id="email" placeholder="Email nhà cung cấp... " required>
-              </div>
-              <div class="form-group">
-                <label for="phone">Phone nhà cung cấp</label>
-                <input formControlName="phone" type="text" class="form-control" id="phone" placeholder="Phone nhà cung cấp... " required>
-              </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                  <button type="submit" class="btn btn-primary" style="background: #5b5d8f;">Lưu</button>
-                </div>
-              </form>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-  <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog"
-      aria-labelledby="confirmDeleteLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-          <div class="modal-content">
-              <div class="modal-header">
-                  <h2 class="modal-title" id="confirmDeleteLabel">Xác nhận xóa</h2>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                  </button>
-              </div>
-              <div class="modal-body">
-                <h5>Bạn có chắc chắn muốn xóa nhà cung cấp này không?</h5>
-              </div>
-              <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                  <button type="button" class="btn btn-danger" data-dismiss="modal" >Xóa</button>
-                  <!-- (click)="idToDelete !== null ? deleteCategory(idToDelete) : null" -->
-              </div>
+      <div class="modal-body">
+        <!-- Gắn formGroup vào phần tử form -->
+        <form [formGroup]="addSupplierForm" (ngSubmit)="addSupplier()">
+          <div class="form-group">
+            <label for="name">Tên nhà cung cấp</label>
+            <input formControlName="name" type="text" class="form-control" id="name" placeholder="Nhập tên nhà cung cấp" required>
           </div>
+          <div class="form-group">
+            <label for="address">Địa chỉ nhà cung cấp</label>
+            <input formControlName="address" type="text" class="form-control" id="address" placeholder="Địa chỉ nhà cung cấp... " required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email nhà cung cấp</label>
+            <input formControlName="email" type="email" class="form-control" id="email" placeholder="Email nhà cung cấp... " required>
+          </div>
+          <div class="form-group">
+            <label for="phone">Số điện thoại nhà cung cấp</label>
+            <input formControlName="phone" type="text" class="form-control" id="phone" placeholder="Số điện thoại nhà cung cấp... " required>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            <button type="submit" class="btn btn-primary" style="background: #5b5d8f;">Thêm</button>
+          </div>
+        </form>
       </div>
+    </div>
   </div>
+</div>
+
+
+
+
+  <!-- Modal Cập Nhật Nhà Cung Cấp -->
+<div class="modal fade" id="editCategoryModal" tabindex="-1" role="dialog" aria-labelledby="editCategoryLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="editCategoryLabel">Sửa nhà cung cấp</h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="editSupplierForm" (ngSubmit)="updateSupplier()">
+          <div class="form-group">
+            <label for="name">Tên nhà cung cấp</label>
+            <input formControlName="name" type="text" class="form-control" id="name" placeholder="Nhập tên nhà cung cấp" required>
+          </div>
+          <div class="form-group">
+            <label for="address">Địa chỉ nhà cung cấp</label>
+            <input formControlName="address" type="text" class="form-control" id="address" placeholder="Địa chỉ nhà cung cấp... ">
+          </div>
+          <div class="form-group">
+            <label for="email">Email nhà cung cấp</label>
+            <input formControlName="email" type="email" class="form-control" id="email" placeholder="Email nhà cung cấp... " required>
+          </div>
+          <div class="form-group">
+            <label for="phone">Số điện thoại nhà cung cấp</label>
+            <input formControlName="phone" type="text" class="form-control" id="phone" placeholder="Số điện thoại nhà cung cấp... " required>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            <button type="submit" class="btn btn-primary" style="background: #5b5d8f;">Lưu</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+  <!-- Modal Xác Nhận Xóa -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="confirmDeleteLabel">Xác nhận xóa</h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h5>Bạn có chắc chắn muốn xóa nhà cung cấp này không?</h5>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+        <button type="button" class="btn btn-danger" (click)="deleteSupplier(selectedSupplier?.id!)" data-dismiss="modal">Xóa</button>
+
+      </div>
+    </div>
+  </div>
+</div>
 
