@@ -33,28 +33,27 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let user of users">
-        <td>{{ user.id }}</td>
-        <td>{{ user.fullname }}</td>
-        <td>{{ user.phone_number }}</td>
-        <td>{{ user.address }}</td>
-        <td>{{ user.date_of_birth | date:'shortDate' }}</td> <!-- Sử dụng pipe date để định dạng -->
-        <td>{{ user.role }}</td>
-        <td>{{ user.active ? 'Kích hoạt' : 'Ngưng hoạt động' }}</td>
+      <tr *ngFor="let cmt of comments">
+        <td>{{ cmt.user.id }}</td>
+        <td>{{ cmt.user.fullname }}</td>
+        <td>{{ cmt.user.phone_number }}</td>
+        <td>{{ cmt.user.address }}</td>
+        <td>{{ cmt.user.date_of_birth | date:'shortDate' }}</td> <!-- Sử dụng pipe date để định dạng -->
+        <td>{{ cmt.user.role }}</td>
+        <td>{{ cmt.user.active ? 'Kích hoạt' : 'Ngưng hoạt động' }}</td>
         <td>
           <a class="btn btn-sm" data-toggle="modal"
           data-target="#editCategoryModal"><i class="ri-edit-2-line"></i></a>
         |
           <a class="btn btn-sm" data-toggle="modal"
-          data-target="#confirmDeleteModal" style="padding: 5px; font-size: 15px;">
+          data-target="#confirmDeleteModal" style="padding: 5px; font-size: 15px;" (click)="deleteComment(cmt.id)">
           <i class="ri-delete-bin-7-line"></i></a>
       </td>
       </tr>
     </tbody>
   </table>
-</div>
 
-<nav aria-label="Page navigation">
+<!-- <nav aria-label="Page navigation">
   <ul class="pagination">
     <li class="page-item" [class.disabled]="currentPage === 1">
       <a class="page-link" (click)="changePage(currentPage - 1)"> &laquo; </a>
@@ -69,98 +68,4 @@
       <a class="page-link" (click)="changePage(currentPage + 1)"> &raquo; </a>
     </li>
   </ul>
-</nav>
-
-<ng-template #nocates>
-    <p>Không có bình luận nào.</p>
-</ng-template>
-
-<div class="modal fade" id="addCategoryModal" tabindex="-1" role="dialog" aria-labelledby="addCategoryLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h2 class="modal-title" id="addCategoryLabel">Thêm bình luận</h2>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form>
-            <div class="form-group">
-              <label for="product_id">Sản phẩm</label>
-              <input formControlName="product_id" type="text" class="form-control" id="product_id" placeholder="Nhập sản phẩm" required>
-            </div>
-            <div class="form-group">
-              <label for="user_id">Khách Hàng</label>
-              <input formControlName="user_id" type="text" class="form-control" id="user_id" placeholder="Khách hàng... " required>
-            </div>
-            <div class="form-group">
-              <label for="content">Khách Hàng</label>
-              <input formControlName="content" type="text" class="form-control" id="content" placeholder="Nội dung ... " required>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                <button type="submit" class="btn btn-primary" style="background: #5b5d8f;">Thêm</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-
-    <!-- Modal Sửa Danh Mục -->
-<div class="modal fade" id="editCategoryModal" tabindex="-1" role="dialog" aria-labelledby="editCategoryLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h2 class="modal-title" id="editCategoryLabel">Sửa Bình luận</h2>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-            <form>
-              <div class="form-group">
-                <label for="product_id">Sản phẩm</label>
-                <input formControlName="product_id" type="text" class="form-control" id="product_id" placeholder="Nhập sản phẩm" required>
-              </div>
-              <div class="form-group">
-                <label for="user_id">Khách Hàng</label>
-                <input formControlName="user_id" type="text" class="form-control" id="user_id" placeholder="Khách hàng... " required>
-              </div>
-              <div class="form-group">
-                <label for="content">Khách Hàng</label>
-                <input formControlName="content" type="text" class="form-control" id="content" placeholder="Nội dung ... " required>
-              </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                  <button type="submit" class="btn btn-primary" style="background: #5b5d8f;">Lưu</button>
-                </div>
-              </form>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-  <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog"
-      aria-labelledby="confirmDeleteLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-          <div class="modal-content">
-              <div class="modal-header">
-                  <h2 class="modal-title" id="confirmDeleteLabel">Xác nhận xóa</h2>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                  </button>
-              </div>
-              <div class="modal-body">
-                <h5>Bạn có chắc chắn muốn xóa bình luận này không?</h5>
-              </div>
-              <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                  <button type="button" class="btn btn-danger" data-dismiss="modal" >Xóa</button>
-                  <!-- (click)="idToDelete !== null ? deleteCategory(idToDelete) : null" -->
-              </div>
-          </div>
-      </div>
-  </div>
+</nav></div> -->

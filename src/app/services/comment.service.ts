@@ -16,7 +16,9 @@ export class CommentService {
   getAllcommentsByProduct(productId: number): Observable<ApiResponse>{
     return this.http.get<ApiResponse>(`${this.apiBaseUrl}/comments/${productId}`);
   }
-
+  getAllComments(): Observable<ApiResponse>{
+    return this.http.get<ApiResponse>(`${this.apiBaseUrl}/comments/all`);
+  }
   insertComment(insertCommentDTO:InsertCommentDTO):Observable<ApiResponse>{
     const token = localStorage.getItem('access_token');
     console.log(token);
@@ -25,5 +27,11 @@ export class CommentService {
     });
     return this.http.post<ApiResponse>(`${this.apiBaseUrl}/comments`, insertCommentDTO, {headers: headers});
   }
-
+  deleteComment(commentId: number): Observable<ApiResponse>{
+    const token = localStorage.getItem('access_token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.delete<ApiResponse>(`${this.apiBaseUrl}/comments/${commentId}`, {headers: headers});
+  }
 }
