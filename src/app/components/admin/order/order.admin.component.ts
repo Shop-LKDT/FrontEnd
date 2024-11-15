@@ -63,9 +63,6 @@ export class OrderAdminComponent implements OnInit{
         debugger        
         this.orders = apiResponse.data;
         this.totalPages = apiResponse.data.totalPages;
-        // this.visiblePages = this.generateVisiblePageArray(this.currentPage, this.totalPages);
-        console.log(this.orders)
-        console.log(1)
       },
       complete: () => {
         debugger;
