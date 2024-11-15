@@ -19,6 +19,7 @@ export class ReportService {
     this.token = this.tokenService.getToken();
   }
   getAllReports(page: number, size: number): Observable<ApiResponse> {
+    console.log('token', this.token);
     return this.http.get<ApiResponse>(`${this.apiBaseUrl}/reports?page=${page}&limit=${size}`,
       {
         headers: new HttpHeaders({
@@ -29,15 +30,43 @@ export class ReportService {
     );
   }
   getReport(reportId: number): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(`${this.apiBaseUrl}/reports/${reportId}`);
+    return this.http.get<ApiResponse>(`${this.apiBaseUrl}/reports/${reportId}`,
+      {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.token}`
+        })
+      }
+    );
   }
   deleteReport(reportId: number): Observable<ApiResponse> {
-    return this.http.delete<ApiResponse>(`${this.apiBaseUrl}/reports/${reportId}`);
+    return this.http.delete<ApiResponse>(`${this.apiBaseUrl}/reports/${reportId}`,
+      {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.token}`
+        })
+      }
+    );
   }
   updateReport(reportId: number, report: ReportDto): Observable<ApiResponse> {
-    return this.http.put<ApiResponse>(`${this.apiBaseUrl}/reports/${reportId}`, report);
+    return this.http.put<ApiResponse>(`${this.apiBaseUrl}/reports/${reportId}`, report,
+      {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.token}`
+        })
+      }
+    );
   }
   insertReport(report: ReportDto): Observable<ApiResponse> {
-    return this.http.post<ApiResponse>(`${this.apiBaseUrl}/reports`, report);
+    return this.http.post<ApiResponse>(`${this.apiBaseUrl}/reports`, report,
+      {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.token}`
+        })
+      }
+    );
   }
 }

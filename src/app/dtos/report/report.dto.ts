@@ -1,11 +1,11 @@
 export class ReportDto {
     userId: number;
-    reportContent: string;
+    status: string;
     responseFromManagement: string;
 
-    constructor(userId: number, reportContent: string, responseFromManagement: string) {
+    constructor(userId: number, status: string, responseFromManagement: string) {
         this.userId = userId;
-        this.reportContent = reportContent;
+        this.status = status;
         this.responseFromManagement = responseFromManagement;
     }
 }

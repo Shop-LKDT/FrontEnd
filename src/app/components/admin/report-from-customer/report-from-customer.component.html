@@ -31,90 +31,31 @@
     </thead>
     <tbody>
       <tr *ngFor="let report of reports">
-        <td>{{ report.id }}</td>
-        <td>{{ report.userId }}</td>
-        <td>{{ report.created_at  }}</td>
-        <td>{{ report.reportContent}}</td>
-        <td>{{ report.updated_at }}</td>
-        <td>{{ report.responseFromManagement }}</td>
-        <td>
-          <a class="btn btn-sm" data-toggle="modal"
-          data-target="#editCategoryModal"><i class="ri-edit-2-line"></i></a>
-        |
-          <a class="btn btn-sm" data-toggle="modal"
-          data-target="#confirmDeleteModal" style="padding: 5px; font-size: 15px;">
-          <i class="ri-delete-bin-7-line"></i></a>
-      </td>
+          <td>{{ report.id }}</td>
+          <td>{{ report.userId }}</td>
+          <td>{{ report.created_at }}</td>
+          <td>{{ report.reportContent }}</td>
+          <td>{{ report.status }}</td>
+          <td>{{ report.responseFromManagement }}</td>
+          <td>
+            <a class="btn btn-sm" data-toggle="modal" data-target="#editCategoryModal" (click)="openEditModal(report)">
+              <i class="ri-edit-2-line"></i>
+            </a>
+            |
+            <a class="btn btn-sm" data-toggle="modal" data-target="#confirmDeleteModal" (click)="openDeleteModal(report)" style="padding: 5px; font-size: 15px;">
+              <i class="ri-delete-bin-7-line" ></i>
+            </a>
+          </td>
       </tr>
     </tbody>
   </table>
 </div>
 
-<nav aria-label="Page navigation">
-  <ul class="pagination">
-    <li class="page-item" [class.disabled]="currentPage === 1">
-      <a class="page-link" (click)="changePage(currentPage - 1)"> &laquo; </a>
-    </li>
-
-    <li class="page-item" *ngFor="let page of [].constructor(totalPages); let i = index"
-        [class.active]="i + 1 === currentPage">
-      <a class="page-link" (click)="changePage(i + 1)">{{ i + 1 }}</a>
-    </li>
-
-    <li class="page-item" [class.disabled]="currentPage === totalPages">
-      <a class="page-link" (click)="changePage(currentPage + 1)"> &raquo; </a>
-    </li>
-  </ul>
-</nav>
 <ng-template #nocates>
-  <p>Không có bài báo cáo nào.</p>
+  <p>Không có báo cáo nào.</p>
 </ng-template>
-<!-- 
-<div class="modal fade" id="addCategoryModal" tabindex="-1" role="dialog" aria-labelledby="addCategoryLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-      <div class="modal-content">
-          <div class="modal-header">
-              <h2 class="modal-title" id="addCategoryLabel">Thêm báo cáo</h2>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-              </button>
-          </div>
-          <div class="modal-body">
-              <form [formGroup]="addReportForm">
-                  <div class="form-group">
-                      <label for="customerId">Họ Tên Khách</label>
-                      <input formControlName="customerId" type="text" class="form-control" id="customerId" required readonly>
-                  </div>
-                  <div class="form-group">
-                      <label for="reportDate">Ngày Báo Cáo</label>
-                      <input formControlName="reportDate" type="text" class="form-control" id="reportDate" placeholder="Ngày Báo Cáo... " required>
-                  </div>
-                  <div class="form-group">
-                      <label for="content">Nội dung bài báo cáo</label>
-                      <input formControlName="content" type="text" class="form-control" id="content" placeholder="Nội dung bài báo cáo... " required>
-                  </div>
-                  <div class="form-group">
-                      <label for="status">Trạng thái</label>
-                      <select class="form-control" id="status" formControlName="status" required>
-                          <option value="">Chọn Trạng thái</option>
-                          <option value="pending">Chờ xử lý</option>
-                          <option value="completed">Hoàn thành</option>
-                      </select>
-                  </div>
-                  <div class="form-group">
-                      <label for="response">Phản hồi từ bộ phận quản lý</label>
-                      <input formControlName="response" type="text" class="form-control" id="response" placeholder="Phản hồi từ bộ phận quản lý... " required>
-                  </div>
-                  <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                      <button type="submit" class="btn btn-primary" style="background: #5b5d8f;">Thêm</button>
-                  </div>
-              </form>
-          </div>
-      </div>
-  </div>
-</div>
 
+<!-- Modal Sửa báo cáo -->
 <div class="modal fade" id="editCategoryModal" tabindex="-1" role="dialog" aria-labelledby="editCategoryLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -125,30 +66,17 @@
               </button>
           </div>
           <div class="modal-body">
-              <form [formGroup]="editReportForm">
-                  <div class="form-group">
-                      <label for="customerId">Họ Tên Khách</label>
-                      <input formControlName="customerId" type="text" class="form-control" id="customerId" placeholder="Họ Tên Khách... " required readonly>
-                  </div>
-                  <div class="form-group">
-                      <label for="reportDate">Ngày Báo Cáo</label>
-                      <input formControlName="reportDate" type="text" class="form-control" id="reportDate" placeholder="Ngày Báo Cáo... " required>
-                  </div>
-                  <div class="form-group">
-                      <label for="content">Nội dung bài báo cáo</label>
-                      <input formControlName="content" type="text" class="form-control" id="content" placeholder="Nội dung bài báo cáo... " required>
-                  </div>
+              <form [formGroup]="reportForm" (ngSubmit)="updateReport()">
                   <div class="form-group">
                       <label for="status">Trạng thái</label>
-                      <select class="form-control" id="status" formControlName="status" required>
-                          <option value="">Chọn Trạng thái</option>
-                          <option value="pending">Chờ xử lý</option>
-                          <option value="completed">Hoàn thành</option>
+                      <select formControlName="status" class="form-control" id="status" required>
+                          <option [value]="'pending'">Đang chờ xử lý</option>
+                          <option [value]="'completed'">Đã xử lý</option>
                       </select>
                   </div>
                   <div class="form-group">
-                      <label for="response">Phản hồi từ bộ phận quản lý</label>
-                      <input formControlName="response" type="text" class="form-control" id="response" placeholder="Phản hồi từ bộ phận quản lý... " required>
+                      <label for="responseFromManagement">Phản hồi từ bộ phận quản lý</label>
+                      <input formControlName="responseFromManagement" class="form-control" id="responseFromManagement" required>
                   </div>
                   <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
@@ -160,6 +88,7 @@
   </div>
 </div>
 
+<!-- Modal Xóa báo cáo -->
 <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -170,12 +99,13 @@
               </button>
           </div>
           <div class="modal-body">
-              <h5>Bạn có chắc chắn muốn xóa báo cáo này không?</h5>
+              <h5>Bạn có chắc chắn muốn xóa báo cáo "{{ selectedReport?.id }}" không?</h5>
           </div>
           <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-              <button type="button" class="btn btn-danger" data-dismiss="modal">Xóa</button>
+              <button type="button" class="btn btn-danger" (click)="deleteReport()">Xóa</button>
           </div>
       </div>
   </div>
-</div> -->
+</div>
+
