@@ -11,6 +11,7 @@ import { DOCUMENT } from '@angular/common';
 import { inject } from '@angular/core';
 import { ApiResponse } from '../responses/api.response';
 import { LoginResponse } from '../responses/user/login.response';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -110,6 +111,26 @@ export class UserService {
   getUsers(params: { page: number, limit: number, keyword: string }): Observable<ApiResponse> {
     const url = `${environment.apiBaseUrl}/users`;
     return this.http.get<ApiResponse>(url, { params: params });
+  }
+
+  // Hàm lấy danh sách tất cả user
+  getAllUsers(): Observable<User[]> {
+    return this.http.get<User[]>(`${environment.apiBaseUrl}/users/all`);
+  }
+  // Đếm số lượng user
+  countUsers(): Observable<number> {
+    return new Observable((observer) => {
+      this.getAllUsers().subscribe({
+        next: (users) => {
+          observer.next(users.length);
+          observer.complete();
+        },
+        error: (err) => {
+          console.error('Error fetching users:', err);
+          observer.error(err);
+        },
+      });
+    });
   }
 
   resetPassword(userId: number): Observable<ApiResponse> {

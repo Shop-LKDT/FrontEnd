@@ -4,6 +4,8 @@ import { isPlatformBrowser } from '@angular/common';
 import { Inject, PLATFORM_ID, AfterViewInit, Component, ElementRef, ViewChild, OnInit } from '@angular/core';
 
 import { Chart, registerables } from 'chart.js' //npm install chart.js
+import { UserService } from '../../../services/user.service';
+import { OrderService } from '../../../services/order.service';
 Chart.register(...registerables);
 
 @Component({
@@ -15,24 +17,52 @@ Chart.register(...registerables);
 })
 export class DashboardComponent implements OnInit, AfterViewInit {
   totalProductCount: number = 100;
-  totalOrderPrice: number = 11003200;
-  totalUsers: number = 10034;
+  totalOrderPriceStr: String = '0.00';
+  totalOrderPrice: number = 0;
+  totalUsers: number = 0;
   totalQuest: number = 100;
-
+  monthlyData: number[] = [];
   @ViewChild('myChart', { static: true }) myChart!: ElementRef<HTMLCanvasElement>;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: object) {}
+  constructor(@Inject(PLATFORM_ID) private platformId: object, private userService:UserService,
+  private orderService: OrderService) {}
 
   ngOnInit(): void {
+    this.fetchUserCount();
+    this.loadTotalRevenue();
+    this.fetchMonthlyRevenue();
     // Khởi tạo các giá trị hoặc thực hiện bất kỳ logic nào cần thiết
   }
 
   ngAfterViewInit() {
-    if (isPlatformBrowser(this.platformId)) {
-      this.renderChart();
-    }
+    // if (isPlatformBrowser(this.platformId)) {
+    //   this.renderChart();
+    // }
   }
-
+  fetchUserCount(): void {
+    this.userService.countUsers().subscribe({
+      next: (count: number) => {
+        this.totalUsers = count;
+        console.log(`Total users: ${this.totalUsers}`);
+      },
+      error: (err) => {
+        console.error('Error fetching user count:', err);
+      },
+    });
+  }
+  loadTotalRevenue(): void {
+    this.orderService.getTotalRevenue().subscribe({
+      next: (revenue: string) => {
+        console.log(`Total revenue: ${revenue}`);
+        this.totalOrderPriceStr = revenue; // Gán tổng doanh thu nhận được
+        this.totalOrderPrice = parseFloat(revenue); // Chuyển đổi sang kiểu số
+      },
+      error: (err) => {
+        console.error('Error fetching total revenue:', err);
+        this.totalOrderPriceStr = '0.00'; // Gán giá trị mặc định nếu lỗi
+        this.totalOrderPrice = 0; // Gán giá trị mặc định nếu lỗi
+      },
+    });}
   renderChart() {
     const ctx = this.myChart.nativeElement.getContext('2d');
     if (!ctx) return;
@@ -41,17 +71,20 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     const monthlyLabels = ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6',
                            'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'];
 
-    const monthlyData = [
+    const monthlyDataCHart = this.monthlyData
+    console.log('Monthly data:', monthlyDataCHart);
+    const monthlyDataa = [
       1000, 1500, 1200, 1700, 1300, 1900,
       2200, 2400, 2100, 2500, 3000, 3200
     ];
+    console.log('Monthly data:', monthlyDataa);
 
     // Dữ liệu cho từng quý
     const quarterlyData = [
-      monthlyData.slice(0, 3).reduce((a, b) => a + b, 0), // Tổng doanh thu Quý 1
-      monthlyData.slice(3, 6).reduce((a, b) => a + b, 0), // Tổng doanh thu Quý 2
-      monthlyData.slice(6, 9).reduce((a, b) => a + b, 0), // Tổng doanh thu Quý 3
-      monthlyData.slice(9, 12).reduce((a, b) => a + b, 0) // Tổng doanh thu Quý 4
+      monthlyDataCHart.slice(0, 3).reduce((a, b) => a + b, 0), // Tổng doanh thu Quý 1
+      monthlyDataCHart.slice(3, 6).reduce((a, b) => a + b, 0), // Tổng doanh thu Quý 2
+      monthlyDataCHart.slice(6, 9).reduce((a, b) => a + b, 0), // Tổng doanh thu Quý 3
+      monthlyDataCHart.slice(9, 12).reduce((a, b) => a + b, 0) // Tổng doanh thu Quý 4
     ];
 
     // Dữ liệu cho từng năm
@@ -66,7 +99,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         datasets: [
           {
             label: 'Doanh thu hàng tháng',
-            data: monthlyData, // Dữ liệu theo tháng
+            data: monthlyDataCHart, // Dữ liệu theo tháng
             backgroundColor: 'rgba(75, 192, 192, 0.2)', // Màu nền
             borderColor: 'rgba(75, 192, 192, 1)', // Màu viền
             borderWidth: 2,
@@ -116,5 +149,17 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         },
       },
     });
+  }
+  fetchMonthlyRevenue(): void {
+    this.orderService.getMonthlyRevenue().subscribe(
+      (data: number[]) => {
+        this.monthlyData = data;
+        console.log('Monthly revenue data:', this.monthlyData);
+        this.renderChart();
+      },
+      (error) => {
+        console.error('Error fetching monthly revenue:', error);
+      }
+    );
   }
 }

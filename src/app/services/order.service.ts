@@ -1,9 +1,9 @@
 import { ProductService } from './product.service';
 import { Injectable } from '@angular/core';
-import { 
-  HttpClient, 
-  HttpParams, 
-  HttpHeaders 
+import {
+  HttpClient,
+  HttpParams,
+  HttpHeaders
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
@@ -20,7 +20,7 @@ export class OrderService {
 
   constructor(private http: HttpClient) {}
 
-  placeOrder(orderData: OrderDTO): Observable<ApiResponse> {    
+  placeOrder(orderData: OrderDTO): Observable<ApiResponse> {
     // Gửi yêu cầu đặt hàng
     return this.http.post<ApiResponse>(this.apiUrl, orderData);
   }
@@ -36,9 +36,9 @@ export class OrderService {
     page: number, limit: number
   ): Observable<ApiResponse> {
       const params = new HttpParams()
-      .set('keyword', keyword)      
+      .set('keyword', keyword)
       .set('page', page.toString())
-      .set('limit', limit.toString());            
+      .set('limit', limit.toString());
       return this.http.get<ApiResponse>(this.apiGetAllOrders, { params });
   }
   updateOrder(orderId: number, orderData: OrderDTO): Observable<ApiResponse> {
@@ -48,5 +48,14 @@ export class OrderService {
   deleteOrder(orderId: number): Observable<ApiResponse> {
     const url = `${environment.apiBaseUrl}/orders/${orderId}`;
     return this.http.delete<ApiResponse>(url);
+  }
+
+   // Hàm lấy tổng doanh thu
+   getTotalRevenue(): Observable<string> {
+    return this.http.get<string>(`${environment.apiBaseUrl}/orders/total-revenue`);
+  }
+
+  getMonthlyRevenue(): Observable<number[]> {
+    return this.http.get<number[]>(`${environment.apiBaseUrl}/orders/monthly-revenue`);
   }
 }
