@@ -91,7 +91,11 @@ export class HeaderComponent implements OnInit{
     }
     this.isPopoverOpen = false; // Close the popover after clicking an item
   }
+  FavoriteProduct(){
+    console.log('Favorite clicked');
 
+    this.router.navigate(['/favorite']);
+  }
 
   setActiveNavItem(index: number) {
     this.activeNavItem = index;

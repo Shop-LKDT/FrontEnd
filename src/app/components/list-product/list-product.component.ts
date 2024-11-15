@@ -16,6 +16,7 @@ import { FavoriteService } from '../../services/favorite.service'; // Đường 
 import { CartService } from '../../services/cart.service';
 import { UserResponse } from '../../responses/user/user.response';
 import { UserService } from '../../services/user.service';
+import { ProductCartComponent } from '../product-cart/product-cart.component';
 
 @Component({
   selector: 'app-list-product',
@@ -25,6 +26,7 @@ import { UserService } from '../../services/user.service';
   imports: [
     CommonModule,
     FormsModule,
+    ProductCartComponent,
     RouterModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
@@ -124,7 +126,7 @@ export class ListProductComponent implements OnInit {
       console.error('Không lấy được ID người dùng.');
     }
   }
-  
+
 
   // Toggle trạng thái yêu thích cho sản phẩm
   toggleFavorite(productId: number) {

@@ -18,6 +18,7 @@ import { MyOrderedComponent } from './components/my-ordered/my-ordered.component
 //import { OrderAdminComponent } from './components/admin/order/order.admin.component';
 import { UpdateUserComponent } from './components/user-profile/update-user/update.profile.component';
 import { AuthCallbackComponent } from './components/auth-callback/auth-callback/auth-callback.component';
+import { FavoriteProductComponent } from './components/favorite-product/favorite-product.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -32,7 +33,7 @@ export const routes: Routes = [
   { path: 'my-ordered', component: MyOrderedComponent, canActivate:[AuthGuardFn] },
   { path: 'my-ordered/:id', component: OrderDetailComponent, canActivate:[AuthGuardFn] },
   { path: 'users/update', component: UpdateUserComponent },
-
+  { path: 'favorite', component: FavoriteProductComponent},
 
 
   //Admin
