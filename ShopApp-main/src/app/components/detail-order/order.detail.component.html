@@ -1,0 +1,70 @@
+<app-header></app-header>
+<div class="container">
+    <div class="intro-section">
+        <h1>Order Details</h1>
+    </div>
+    
+    <!-- Receiver information -->
+    @if(orderResponse) {
+        <div class="row">
+            <div class="col-md-5">
+                <h2 class="product-header"><span>Receiver</span> Information</h2>
+                <div class="mb-3">
+                    <p class="form-label"><span>Fullname :</span> {{ orderResponse.fullname }}</p>
+                </div>
+                <!-- Other information fields -->
+                <div class="mb-3">
+                    <p class="form-label"><span>Email :</span> {{ orderResponse.email }}</p>
+                </div>
+                <div class="mb-3">
+                    <p class="form-label"><span>Phone number</span> : {{ orderResponse.phone_number }}</p>
+                </div>
+                <div class="mb-3">
+                    <p class="form-label"><span>Address :</span> {{ orderResponse.address }}</p>
+                </div>
+                <div class="mb-3">
+                    <p class="form-label"><span>Note :</span> {{ orderResponse.note }}</p>
+                </div>
+                <div class="mb-3">
+                    <p class="form-label"><span>Shipping method :</span> {{ orderResponse.shipping_method }}</p>
+                </div>
+                <div class="mb-3">
+                    <p class="form-label"><span>Payment method :</span> {{ orderResponse.payment_method }}</p>
+                </div>                        
+            </div>
+    
+            <!-- Ordered products -->
+            <div class="col-md-7">
+                <h2 class="product-order">Ordered Products</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col" class="text-start">Product</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Unit Price</th>
+                            <th scope="col">Total Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of orderResponse.order_details">
+                            <td>
+                                <div class="product-info">
+                                    <img [src]="item.thumbnail" alt="Product Image" class="product-image">
+                                    <span class="product-name">{{ item.product_name }}</span>
+                                    
+                                </div>
+                            </td>
+                            <td>{{ item.number_of_products }}</td>
+                            <td>{{ item.price | number:'1.2-2' }}</td>
+                            <td>{{ item.number_of_products * item.price  | number:'1.2-2' }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="text-start mt-3">
+                    <h4 class="header-text text-end">Total Price: {{ orderResponse.total_money | number:'1.2-2' }}</h4>
+                </div>            
+            </div>
+        </div>    
+}    
+</div>
+<app-footer></app-footer>

@@ -1,0 +1,166 @@
+<h1>BÌNH LUẬN</h1>
+<hr>
+<br>
+
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="display: flex; flex-direction: row;">
+  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+    <div class="form-inline">
+      <div class="form-group">
+          <input type="text" class="form-control" placeholder="Tìm kiếm . . . . ." #searchName>
+      </div>
+      <button type="submit" class="btn btn-primary" style="background: #5b5d8f;"><i class="fa fa-search"></i></button>
+    </div>
+  </div>
+  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+    <a class="btn btn-sm btn-success" style="padding: 5px; font-size: 15px; background:#5b5d8f; color:white; position: absolute; right: 0;" data-toggle="modal" data-target="#addCategoryModal">
+      THÊM BÌNH LUẬN
+    </a>
+  </div>
+</div>
+<br>
+<div>
+  <table class="table">
+    <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Họ Tên</th>
+        <th>Số Điện Thoại</th>
+        <th>Địa Chỉ</th>
+        <th>Ngày Sinh</th>
+        <th>Vai Trò</th>
+        <th>Trạng Thái</th>
+        <th><i class="ri-settings-5-fill"></i></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{ user.id }}</td>
+        <td>{{ user.fullname }}</td>
+        <td>{{ user.phone_number }}</td>
+        <td>{{ user.address }}</td>
+        <td>{{ user.date_of_birth | date:'shortDate' }}</td> <!-- Sử dụng pipe date để định dạng -->
+        <td>{{ user.role }}</td>
+        <td>{{ user.active ? 'Kích hoạt' : 'Ngưng hoạt động' }}</td>
+        <td>
+          <a class="btn btn-sm" data-toggle="modal"
+          data-target="#editCategoryModal"><i class="ri-edit-2-line"></i></a>
+        |
+          <a class="btn btn-sm" data-toggle="modal"
+          data-target="#confirmDeleteModal" style="padding: 5px; font-size: 15px;">
+          <i class="ri-delete-bin-7-line"></i></a>
+      </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<nav aria-label="Page navigation">
+  <ul class="pagination">
+    <li class="page-item" [class.disabled]="currentPage === 1">
+      <a class="page-link" (click)="changePage(currentPage - 1)"> &laquo; </a>
+    </li>
+
+    <li class="page-item" *ngFor="let page of [].constructor(totalPages); let i = index"
+        [class.active]="i + 1 === currentPage">
+      <a class="page-link" (click)="changePage(i + 1)">{{ i + 1 }}</a>
+    </li>
+
+    <li class="page-item" [class.disabled]="currentPage === totalPages">
+      <a class="page-link" (click)="changePage(currentPage + 1)"> &raquo; </a>
+    </li>
+  </ul>
+</nav>
+
+<ng-template #nocates>
+    <p>Không có bình luận nào.</p>
+</ng-template>
+
+<div class="modal fade" id="addCategoryModal" tabindex="-1" role="dialog" aria-labelledby="addCategoryLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title" id="addCategoryLabel">Thêm bình luận</h2>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="product_id">Sản phẩm</label>
+              <input formControlName="product_id" type="text" class="form-control" id="product_id" placeholder="Nhập sản phẩm" required>
+            </div>
+            <div class="form-group">
+              <label for="user_id">Khách Hàng</label>
+              <input formControlName="user_id" type="text" class="form-control" id="user_id" placeholder="Khách hàng... " required>
+            </div>
+            <div class="form-group">
+              <label for="content">Khách Hàng</label>
+              <input formControlName="content" type="text" class="form-control" id="content" placeholder="Nội dung ... " required>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="submit" class="btn btn-primary" style="background: #5b5d8f;">Thêm</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Modal Sửa Danh Mục -->
+<div class="modal fade" id="editCategoryModal" tabindex="-1" role="dialog" aria-labelledby="editCategoryLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title" id="editCategoryLabel">Sửa Bình luận</h2>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="product_id">Sản phẩm</label>
+                <input formControlName="product_id" type="text" class="form-control" id="product_id" placeholder="Nhập sản phẩm" required>
+              </div>
+              <div class="form-group">
+                <label for="user_id">Khách Hàng</label>
+                <input formControlName="user_id" type="text" class="form-control" id="user_id" placeholder="Khách hàng... " required>
+              </div>
+              <div class="form-group">
+                <label for="content">Khách Hàng</label>
+                <input formControlName="content" type="text" class="form-control" id="content" placeholder="Nội dung ... " required>
+              </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                  <button type="submit" class="btn btn-primary" style="background: #5b5d8f;">Lưu</button>
+                </div>
+              </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog"
+      aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h2 class="modal-title" id="confirmDeleteLabel">Xác nhận xóa</h2>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <div class="modal-body">
+                <h5>Bạn có chắc chắn muốn xóa bình luận này không?</h5>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                  <button type="button" class="btn btn-danger" data-dismiss="modal" >Xóa</button>
+                  <!-- (click)="idToDelete !== null ? deleteCategory(idToDelete) : null" -->
+              </div>
+          </div>
+      </div>
+  </div>

@@ -1,0 +1,24 @@
+
+
+  <div >
+    <h2>Partner</h2>
+    <hr>
+    <div>
+        <swiper-container
+        [slidesPerView] = "slidesPerView"
+        spacebetween = "30px"
+        [grabCursor]="true"
+        pagination-clickable = "true"
+        pagination = "true"
+      autoplay='{"delay": 3000}'
+      effect="coverflow"
+      loop = "true"
+         >
+            <swiper-slide><img (click)="toCategory(1)"  src="https://file.hstatic.net/200000722513/file/thang_10_layout_web_-01.png" alt=""></swiper-slide>
+            <swiper-slide><img (click)="toCategory(2)" src="https://file.hstatic.net/200000722513/file/thang_10_layout_web_-03.png" alt=""></swiper-slide>
+            <swiper-slide><img (click)="toCategory(3)" src="https://file.hstatic.net/200000722513/file/thang_10_artboard_12_copy_10.png" alt=""></swiper-slide>
+            <swiper-slide><img (click)="toCategory(4)" src="https://file.hstatic.net/200000722513/file/thang_10_layout_web_-05.png" alt=""></swiper-slide>
+        </swiper-container>
+    <hr  class="line mt-4">
+      </div>
+  </div>

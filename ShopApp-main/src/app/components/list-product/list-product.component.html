@@ -1,0 +1,32 @@
+<div class="cardbg" style="margin-top: 20px;">
+  <div class="row">
+    <div class="col-lg-6" style="font-weight: bolder; font-size: 18px;">
+      @for(category of categories; track category.id){
+      @if(category.id == categoryId){
+      <h2 class="title">{{category.name}}</h2>
+      }
+      }
+    </div>
+    <div class="col-lg-6" style="text-align: right; font-size: 18px;">
+      Xem tất cả
+    </div>
+  </div>
+  <!-- <swiper-container class="row" [slidesPerView]="slidesPerView" navigation="true" spacebetween="true"
+    pagination-clickable="true" pagination="true" autoplay='{"delay": 5000}'> -->
+    <swiper-container class="row" [slidesPerView]="slidesPerView" navigation="true" spacebetween="true"
+    pagination-clickable="true" pagination="true">
+    @for(product of products; track product.id) {
+    @if (product.category_id == categoryId){
+    <swiper-slide class="col-lg-2">
+      <div class="card">
+        <div class="product-item" (click)="onProductClick(product.id)">
+          <img [src]="product.url" alt="Product Image" class="product-image">
+          <h3 class="product-name text-xl font-bold">{{ product.name }} </h3>
+          <p class="product-price" style="font-size: 18px;">Giá gốc:<del> {{ product.price1 | number:'1.0-2' }} </del>VND</p>
+          <p class="product-price" style="font-size: 18px; color: red;">{{ product.price | number:'1.0-2' }} VND</p>
+        </div>
+      </div>
+    </swiper-slide>
+    }
+    }
+  </swiper-container>
