@@ -212,7 +212,7 @@
     fast-glob "3.3.2"
     yargs "^17.2.1"
 
-"@angular/material@^16.2.6":
+"@angular/material@^16.2.14":
   version "16.2.14"
   resolved "https://registry.npmjs.org/@angular/material/-/material-16.2.14.tgz"
   integrity sha512-zQIxUb23elPfiIvddqkIDYqQhAHa9ZwMblfbv+ug8bxr4D0Dw360jIarxCgMjAcLj7Ccl3GBqZMUnVeM6cjthw==

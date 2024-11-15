@@ -22,7 +22,7 @@ import { RegisterDTO } from '../../dtos/user/register.dto';
 import { Route, ActivatedRoute } from '@angular/router';
 import { LoginResponse } from '../../responses/user/login.response';
 import { RouterModule} from '@angular/router';
-
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -36,6 +36,7 @@ import { RouterModule} from '@angular/router';
     NgbModule,
     ListProductComponent,
     HomePartnerComponent,
+    MatSnackBarModule,
     RouterModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
@@ -194,6 +195,11 @@ export class HomeComponent implements OnInit {
     setActiveNavItem(index: number) {
       this.activeNavItem = index;
       //console.error(this.activeNavItem);
+    }
+    FavoriteProduct(){
+      console.log('Favorite clicked');
+
+      this.router.navigate(['/favorite']);
     }
     getCategories(page: number, limit: number) {
       this.categoryService.getCategories(page, limit).subscribe({
