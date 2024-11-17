@@ -4,5 +4,6 @@ export interface Inventory {
   productName: string;      // Tên sản phẩm
   quantity: number;         // Số lượng sản phẩm trong kho
   location: string;         // Vị trí lưu trữ trong kho
+  warehouse: string;        // Tên kho chứa sản phẩm
 }
 
