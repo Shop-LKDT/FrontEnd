@@ -45,11 +45,14 @@ export class PostComponent implements OnInit{
     this.editForm.patchValue({
       title: post.title,
       content: post.content,
-      isPublished: post.isPublished,
+      isPublished: true,
     });
   }
   submitEdit(): void {
+    
     if (this.editForm.invalid || this.selectedPostId === null) {
+      console.log(this.editForm.value);
+      console.log(this.selectedPostId);
       alert('Vui lòng điền đầy đủ thông tin.');
       return;
     }
@@ -59,6 +62,11 @@ export class PostComponent implements OnInit{
       next: (response) => {
         alert('Bài viết đã được cập nhật thành công!');
         this.getAllPosts(this.currentPage); // Làm mới danh sách bài viết
+        this.editForm = this.fb.group({
+          title: ['', Validators.required],
+          content: ['', Validators.required],
+          isPublished: [true, Validators.required],
+        });
         this.closeDeleteModal();
       },
       error: (err) => {
@@ -98,7 +106,12 @@ export class PostComponent implements OnInit{
     this.postService.createPost(newPost).subscribe({
       next: (response) => {
         alert('Thêm bài viết thành công!');
-        this.postForm.reset();
+        //set các giá trị form về rỗng
+        this.postForm = this.fb.group({
+          title: ['', Validators.required],
+          content: ['', Validators.required],
+          isPublished: [true, Validators.required],
+        });
         this.getAllPosts(); // Làm mới danh sách bài viết
       },
       error: (error) => {

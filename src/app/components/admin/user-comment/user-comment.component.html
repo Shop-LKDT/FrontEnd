@@ -27,7 +27,7 @@
         <th>Số Điện Thoại</th>
         <th>Địa Chỉ</th>
         <th>Ngày Sinh</th>
-        <th>Vai Trò</th>
+        <th>Nội dung</th>
         <th>Trạng Thái</th>
         <th><i class="ri-settings-5-fill"></i></th>
       </tr>
@@ -39,7 +39,7 @@
         <td>{{ cmt.user.phone_number }}</td>
         <td>{{ cmt.user.address }}</td>
         <td>{{ cmt.user.date_of_birth | date:'shortDate' }}</td> <!-- Sử dụng pipe date để định dạng -->
-        <td>{{ cmt.user.role }}</td>
+        <td>{{ cmt.content }}</td>
         <td>{{ cmt.user.active ? 'Kích hoạt' : 'Ngưng hoạt động' }}</td>
         <td>
           <a class="btn btn-sm" data-toggle="modal"
