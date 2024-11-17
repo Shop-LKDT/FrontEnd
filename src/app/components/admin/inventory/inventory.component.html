@@ -122,9 +122,9 @@
         </button>
       </div>
       <div class="modal-body">
-        <form>
+        <form *ngIf="productToUpdate">
           <div class="form-group">
-            <label for="quantity">Số lượng kho lưu trữ</label>
+            <label *NgIf = "productToUpdate" for="quantity">Số lượng kho lưu trữ</label>
             <input [(ngModel)]="productToUpdate!.quantity" type="number" class="form-control" id="quantity" >
           </div>
           <div class="modal-footer">

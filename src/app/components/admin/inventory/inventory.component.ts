@@ -58,13 +58,24 @@ export class InventoryComponent implements OnInit {
     });
   }
   openEditModal(inventory: Inventory): void {
-    this.productToUpdate = { ...inventory };  // Clone the object to avoid direct mutation
+    this.productToUpdate = { ...inventory };  
+    this.addInventoryForm.patchValue({
+      quantity: inventory.quantity,
+    });// Clone the object to avoid direct mutation
     console.log(this.productToUpdate);  
     // You can check in the console to see if it's correct
     const modal = document.getElementById('editCategoryModal') as any;
     if (modal) {
       modal.style.display = 'block';
       modal.classList.add('show');
+    }
+  }
+  closeEditModal(): void {
+    this.productToUpdate = null; // Xóa dữ liệu mã khuyến mãi đang sửa
+    const modal = document.getElementById('editCategoryModal') as any;
+    if (modal) {
+      modal.style.display = 'none';
+      modal.classList.remove('show');
     }
   }
   
