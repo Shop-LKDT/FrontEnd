@@ -1,8 +1,10 @@
+import { WareHouseService } from './../../../services/warehouse.service';
 import { WarehouseProductService } from './../../../services/inventory.service';
 import { Component, NgModule, OnInit } from '@angular/core';
 import { Inventory } from '../../../models/inventory';
 import { NgFor } from '@angular/common';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Warehouse } from '../../../models/warehouse';
 
 @Component({
   selector: 'app-inventory',
@@ -21,11 +23,15 @@ export class InventoryComponent implements OnInit {
   pageSize: number = 6; // Pagination size
   totalPages: number = Math.ceil(this.totalinventorys / this.inventorysPerPage);
   quantity: number = 0; // Calculate total pages
+  warehouses: Warehouse[] = [];
 
   productToUpdate: Inventory | null = null; // Store selected product for update
   productToDeleteId: number | null = null; // Store selected product's ID for deletion
   addInventoryForm: FormGroup;
-  constructor(private warehouseProductService: WarehouseProductService) {
+  constructor(
+    private warehouseProductService: WarehouseProductService,
+    private wareHouseService: WareHouseService,
+  ) {
     this.addInventoryForm = new FormGroup({
       location: new FormControl('', Validators.required),
       productId: new FormControl('', Validators.required),
@@ -35,6 +41,7 @@ export class InventoryComponent implements OnInit {
 
   ngOnInit() {
     this.getData(this.currentPage);
+    this.getAllWareHouse();
   }
 
   // Change page logic
@@ -51,6 +58,17 @@ export class InventoryComponent implements OnInit {
       next: (response) => {
         this.inventories = response.data; // Assign data to inventories
         console.log(this.inventories); 
+      },
+      error: (error) => {
+        console.error(error);
+      },
+    });
+  }
+  getAllWareHouse(): void {
+    this.wareHouseService.getAllWarehouses().subscribe({
+      next: (response) => {
+        this.warehouses = response.data; // Store the fetched warehouses in the warehouses array
+        console.log(this.warehouses); // Debug to check if warehouses are fetched correctly
       },
       error: (error) => {
         console.error(error);
