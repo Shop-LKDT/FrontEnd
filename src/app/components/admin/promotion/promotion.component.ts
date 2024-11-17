@@ -44,7 +44,7 @@ export class PromotionComponent implements OnInit{
     // Lấy dữ liệu từ form
     const newCoupon: Coupon = {
       code: this.couponForm.value.code,
-      value: this.couponForm.value.value,
+      value: this.couponForm.value.value + '%',
       active: this.couponForm.value.isPublished,
     };
 
@@ -125,7 +125,7 @@ export class PromotionComponent implements OnInit{
     const updatedCoupon: Coupon = {
       id: this.selectedCoupon.id, // ID của mã khuyến mãi cần sửa
       code: this.couponForm.value.code,
-      value: this.couponForm.value.value,
+      value: this.couponForm.value.value + '%',
       active: this.couponForm.value.isPublished,
     };
 
