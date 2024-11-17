@@ -3,48 +3,46 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { ApiResponse } from '../responses/api.response';
-import { WareProductResponse } from '../responses/inventory.response';
+
 @Injectable({
   providedIn: 'root'
 })
-export class WarehouseProductService {
+export class InventoryService {
 
-  private apiUrl = `${environment.apiBaseUrl}/warehouse-products`; // Cấu hình apiUrl trong file environment
+  private apiUrl = `${environment.apiBaseUrl}/warehouse-products`; // Set your base API URL
 
   constructor(private http: HttpClient) { }
 
-  // Lấy tất cả các sản phẩm trong kho
+  // Get all products in the warehouse
   getAllWarehouseProducts(): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.apiUrl);
   }
 
-  // Lấy thông tin một sản phẩm trong kho theo ID
+  // Get a product by ID
   getWarehouseProductById(id: number): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(`${this.apiUrl}/${id}`);
   }
 
-  // Thêm mới một sản phẩm vào kho
-  createWarehouseProduct(warehouseProduct: WareProductResponse): Observable<ApiResponse> {
-    return this.http.post<ApiResponse>(this.apiUrl, warehouseProduct);
-  }
 
-  // Cập nhật thông tin sản phẩm trong kho theo ID
+
+  // Update a product in the warehouse by ID
   updateWarehouseProduct(id: number, quantity: number): Observable<ApiResponse> {
     return this.http.put<ApiResponse>(`${this.apiUrl}/${id}?quantity=${quantity}`, {});
   }
 
-  // Cập nhật số lượng sản phẩm trong kho
+  // Update the quantity of a product
   updateProductQuantity(id: number, quantity: number): Observable<ApiResponse> {
     const params = new HttpParams().set('quantity', quantity.toString());
-    return this.http.patch<ApiResponse>(`${this.apiUrl}/${id}/quantity`, { params });
+    console.log('params:', quantity);
+    return this.http.put<ApiResponse>(`${this.apiUrl}/${id}?quantity`, {}, { params });
   }
 
-  // Xóa một sản phẩm khỏi kho
+  // Delete a product from the warehouse
   deleteWarehouseProduct(id: number): Observable<ApiResponse> {
     return this.http.delete<ApiResponse>(`${this.apiUrl}/${id}`);
   }
 
-  // Kiểm tra số lượng tồn kho của một sản phẩm
+  // Check the available quantity of a product
   getAvailableQuantity(productId: number): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(`${this.apiUrl}/${productId}/quantity`);
   }
