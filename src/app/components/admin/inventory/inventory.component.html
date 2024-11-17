@@ -85,32 +85,36 @@
           <form>
             <div class="form-group">
               <label for="warehouse">Chọn kho lưu trữ</label>
-              <select class="form-control" formControlName="location" id="warehouse" required>
+              <select class="form-control" formControlName="location" id="warehouse" required (change)="onWarehouseChange($event)">
                 <option value="">Chọn kho lưu trữ</option>
                 <option *ngFor="let warehouse of warehouses" [value]="warehouse.id">
                   {{ warehouse.name }}
                 </option>
               </select>
             </div>
-            
+          
             <div class="form-group">
               <label for="isPublished">Chọn sản phẩm</label>
-              <select class="form-control" id="isPublished" formControlName="isPublished" required>
-                <option value="">Chọn Chọn sản phẩm</option>
-                <option value="">Chọn Chọn sản phẩm</option>
-                <option value="">Chọn Chọn sản phẩm</option>
-                <option value="">Chọn Chọn sản phẩm</option>
+              <select class="form-control" id="isPublished" formControlName="isPublished" required (change)="onproductChange($event)">
+                <option value="">Chọn sản phẩm</option>
+                <option *ngFor="let product of productNotInWareHouse" [value]="product.id">
+                  {{ product.name }}
+                </option>
               </select>
             </div>
+          
             <div class="form-group">
               <label for="quantity">Số lượng kho lưu trữ</label>
-              <input formControlName="quantity" type="text" class="form-control" id="quantity" placeholder="Số lượng kho lưu trữ... " required>
+              <input formControlName="quantity" type="text" class="form-control" id="quantity" placeholder="Số lượng kho lưu trữ..." required (change)="onquantityChange($event)">
             </div>
+          
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                <button type="submit" class="btn btn-primary" style="background: #5b5d8f;">Thêm</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+              <button type="submit" class="btn btn-primary" style="background: #5b5d8f;" (click)="onSubmit($event)">Thêm</button>
             </div>
           </form>
+          
+
         </div>
       </div>
     </div>

@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { ApiResponse } from '../responses/api.response';
+import { Product } from '../models/product';
+import { WarehouseProduct } from '../dtos/product/warehouseProduct';
 
 @Injectable({
   providedIn: 'root'
@@ -23,8 +25,11 @@ export class WareHouseService {
   createWarehouse(wareHouse: Warehouse): Observable<ApiResponse> {
     return this.http.post<ApiResponse>(this.apiUrl, wareHouse);
   }
-  getAllproductNotInWarehouse(warehouseId: number): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(`${this.apiUrl}/products-not-in-warehouse/${warehouseId}`);
+  insertWareHouseProduct(warehouseProduct: WarehouseProduct): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(`${environment.apiBaseUrl}/warehouse-products`, warehouseProduct);
+  }
+  getAllproductNotInWarehouse(warehouseId: number): Observable<Product[]> {
+    return this.http.get<Product[]>(`${environment.apiBaseUrl}/warehouse-products/products-not-in-warehouse/${warehouseId}`);
   }
 
 }
