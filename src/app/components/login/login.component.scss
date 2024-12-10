@@ -2,14 +2,18 @@
 
 .container {
     color: black;
-    height: 100vh;
+    // height: 100vh;
     margin-top: 100px ;
     margin-bottom: 10px;
+}
+.row{
+    width: 60%;
 }
 .login-form {
     background-color: $shopapp-background-color;
     border-radius: 10px;
     padding: 20px;
+    width: 200px;
     max-width: 500px;
     border: 1px solid rgb(32, 34, 60);
     align-items: center;

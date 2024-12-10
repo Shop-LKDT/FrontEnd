@@ -69,7 +69,7 @@ export class ListProductComponent implements OnInit {
     this.userResponse = this.userService.getUserResponseFromLocalStorage();
     this.getProducts(this.keyword, this.selectedCategoryId, this.currentPage, this.itemsPerPage);
     this.getCategories(0, 100);
-    console.log(this.userResponse)
+    // console.log(this.userResponse)
   }
 
   getCategories(page: number, limit: number) {
@@ -90,7 +90,7 @@ export class ListProductComponent implements OnInit {
 
   getProducts(keyword: string, selectedCategoryId: number, page: number, limit: number) {
     const userId = this.userResponse?.id;
-    console.log("================"+ userId);
+    // console.log("================"+ userId);
     this.productService.getProducts(keyword, selectedCategoryId, page, limit).subscribe({
       next: (apiresponse: ApiResponse) => {
         const response = apiresponse.data;
@@ -111,11 +111,11 @@ export class ListProductComponent implements OnInit {
   // Kiểm tra trạng thái yêu thích của sản phẩm
   checkFavoriteStatus(productId: number) {
     const userId = this.userResponse?.id;
-    console.log("================"+ userId);
+    // console.log("================"+ userId);
     if (userId) {
       this.favoriteService.checkFavorite(userId, productId).subscribe({
         next: (response) => {
-          console.log("response.favorited============="+ response.favorited);
+          // console.log("response.favorited============="+ response.favorited);
           this.isFavorited[productId] = response.favorited;
         },
         error: (error: any) => { // hoặc HttpErrorResponse nếu muốn chi tiết hơn
@@ -130,7 +130,7 @@ export class ListProductComponent implements OnInit {
 
   // Toggle trạng thái yêu thích cho sản phẩm
   toggleFavorite(productId: number) {
-    console.log("===============================")
+    // console.log("===============================")
     this.favoriteService.toggleFavorite(this.tokenService.getUserId(), productId).subscribe({
       next: () => {
         this.isFavorited[productId] = !this.isFavorited[productId];

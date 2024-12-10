@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
 import { ApiResponse } from '../../responses/api.response';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import {  HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-register',
@@ -62,7 +62,7 @@ export class RegisterComponent {
                     `fullName: ${this.fullName}`+
                     `isAccepted: ${this.isAccepted}`+
                     `dateOfBirth: ${this.dateOfBirth}`;
-    //console.error(message);
+    console.error(message);
     debugger
     
     const registerDTO:RegisterDTO = {

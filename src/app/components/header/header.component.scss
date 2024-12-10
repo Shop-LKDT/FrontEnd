@@ -1,27 +1,32 @@
-@import '../../styles/shared-styles.scss';
+@import "../../styles/shared-styles.scss";
 
 header {
-    background-color: rgba(255, 182, 182, 0) !important;
-    color: rgb(173, 178, 203);
-    border-bottom: 1px solid rgb(100, 98, 98);
-}
+  // background-color: rgba(163, 130, 130, 0) !important;
+  color: black !important;;
+  padding: 10px 200px;
+  border-bottom: 1px solid rgb(100, 98, 98);
+  background-color: #BE1529;
 
+}
+.main-header img {
+  width: 80px;
+}
 .navbar {
-    background-color: rgba(0, 0, 0, 0) !important;
+  background-color: rgba(0, 0, 0, 0) !important;
 }
 
 .navbar .container {
-    background-color: rgba(255, 182, 182, 0) !important;
+  background-color: rgba(255, 182, 182, 0) !important;
 }
 
 .navbar .container .navbar-brand {
-    color: rgb(173, 178, 203);
+  color: rgb(173, 178, 203);
 }
 
 .navbar .container .navbar-nav .nav-link {
-    color: rgb(173, 178, 203);
-    border-radius: 18px;
-    padding: 8px 16px;
+  color: rgb(173, 178, 203);
+  border-radius: 18px;
+  padding: 8px 16px;
 }
 
 .search-box {
