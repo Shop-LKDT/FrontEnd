@@ -5,8 +5,6 @@ import { UserService } from '../../services/user.service';
 import { RegisterDTO } from '../../dtos/user/register.dto';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HeaderComponent } from '../header/header.component';
-import { FooterComponent } from '../footer/footer.component';
 import { ApiResponse } from '../../responses/api.response';
 import {  HttpErrorResponse } from '@angular/common/http';
 
@@ -18,8 +16,6 @@ import {  HttpErrorResponse } from '@angular/common/http';
   imports: [
     CommonModule,
     FormsModule,
-    HeaderComponent,
-    FooterComponent
   ]
 })
 export class RegisterComponent {
@@ -46,10 +42,6 @@ export class RegisterComponent {
     this.dateOfBirth.setFullYear(this.dateOfBirth.getFullYear() - 18);
     //inject
 
-  }
-  onPhoneNumberChange(){
-    console.log(`Phone typed: ${this.phoneNumber}`)
-    //how to validate ? phone must be at least 6 characters
   }
   Tologin() {
     this.router.navigate(['/login']); 

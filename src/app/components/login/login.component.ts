@@ -2,14 +2,11 @@ import { Component, ViewChild, OnInit } from '@angular/core';
 import { LoginDTO } from '../../dtos/user/login.dto';
 import { UserService } from '../../services/user.service';
 import { TokenService } from '../../services/token.service';
-import { RoleService } from '../../services/role.service'; // Import RoleService
-import { ActivatedRoute, Router } from '@angular/router';
+import {  Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
-import { LoginResponse } from '../../responses/user/login.response';
 import { Role } from '../../models/role'; // Đường dẫn đến model Role
 import { UserResponse } from '../../responses/user/user.response';
 import { CartService } from '../../services/cart.service';
-
 import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
 import { CommonModule } from '@angular/common';
@@ -21,7 +18,6 @@ import {
   HttpErrorResponse,
 } from '@angular/common/http';
 
-import { environment } from '../../../environments/environment.development';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -29,7 +25,7 @@ import { environment } from '../../../environments/environment.development';
   standalone: true,
   imports: [FooterComponent, HeaderComponent, CommonModule, FormsModule],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent  {
   @ViewChild('loginForm') loginForm!: NgForm;
 
   phoneNumber: string = '';
@@ -41,36 +37,13 @@ export class LoginComponent implements OnInit {
   selectedRole: Role | undefined; // Biến để lưu giá trị được chọn từ dropdown
   userResponse?: UserResponse;
 
-  onPhoneNumberChange() {
-    console.log(`Phone typed: ${this.phoneNumber}`);
-    //how to validate ? phone must be at least 6 characters
-  }
+
   constructor(
     private router: Router,
-    private activatedRoute: ActivatedRoute,
     private userService: UserService,
     private tokenService: TokenService,
-    private roleService: RoleService,
     private cartService: CartService
   ) {}
-
-  ngOnInit() {
-    // Gọi API lấy danh sách roles và lưu vào biến roles
-
-    this.roleService.getRoles().subscribe({
-      next: (apiResponse: ApiResponse) => {
-        // Sử dụng kiểu Role[]
-
-        const roles = apiResponse.data;
-        this.roles = roles;
-        this.selectedRole = roles.length > 0 ? roles[0] : undefined;
-      },
-      complete: () => {},
-      error: (error: HttpErrorResponse) => {
-        console.error(error?.error?.message ?? '');
-      },
-    });
-  }
   createAccount() {
     this.router.navigate(['/register']);
   }
