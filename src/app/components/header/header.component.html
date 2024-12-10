@@ -34,9 +34,9 @@
         <path d="M8 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2 1H6a4 4 0 0 0-4 4v1h12v-1a4 4 0 0 0-4-4z" />
       </svg>
 
-      <ng-container *ngIf="userResponse; else loginLink">
+      <ng-container class="cursor-pointer" *ngIf="userResponse; else loginLink">
         <ng-container ngbPopover="Tài khoản của tôi,Đơn mua,Đăng xuất" popoverTitle="User Actions" triggers="click" [placement]="'bottom'">
-          <a class="text-sm font-medium" [ngbPopover]="popoverContent" (click)="togglePopover($event)">
+          <a  class="text-sm font-medium cursor-pointer" [ngbPopover]="popoverContent" (click)="togglePopover($event)">
             {{ userResponse.fullname }}
           </a>
           <ng-template #popoverContent>

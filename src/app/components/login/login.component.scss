@@ -2,32 +2,42 @@
 
 .container {
     color: black;
-    // height: 100vh;
-    margin-top: 100px ;
+    margin-top: 100px;
     margin-bottom: 10px;
 }
-.row{
-    width: 60%;
+
+.row {
+    width: 100%; /* Đảm bảo nó chiếm hết chiều rộng màn hình */
+    display: flex;
+    justify-content: center; /* Căn giữa các phần tử con */
 }
+
 .login-form {
     background-color: $shopapp-background-color;
     border-radius: 10px;
     padding: 20px;
-    width: 200px;
-    max-width: 500px;
+    width: 100%;
+    max-width: 500px; /* Giới hạn chiều rộng */
     border: 1px solid rgb(32, 34, 60);
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
 }
+
 .login-header {
     text-align: center;
     color: $shopapp-title-color;
+    margin-bottom: 20px; /* Thêm khoảng cách dưới tiêu đề */
 }
+
 .form-control {
     background-color: transparent;
     border: none;
     color: black;
+    padding: 10px;
+    width: 100%; /* Chiếm toàn bộ chiều rộng của form */
 }
+
 .form-control:focus {
     color: black;
     background-color: transparent;
@@ -37,11 +47,14 @@
 
 .divider-nospace {
     border-top: 1px solid white;
+    margin: 10px 0; /* Thêm khoảng cách cho divider */
 }
 
 .password-field {
     position: relative;
+    width: 100%;
 }
+
 .password-toggle {
     position: absolute;
     top: 50%;
@@ -50,6 +63,7 @@
     color: $shopapp-title-color;
     cursor: pointer;
 }
+
 .checkbox-text {
     color: rgb(243, 165, 42);
     display: flex;
@@ -57,7 +71,7 @@
     align-items: center;
     margin-top: 10px;
 }
-/* Màu checkbox khi được chọn */
+
 .checkbox-text input[type="checkbox"]:checked {
     border-color: black;
     background-color: $shopapp-tint-color;
@@ -72,9 +86,11 @@
     text-decoration: none;
     cursor: pointer;
 }
+
 .register-link:hover {
     color: $shopapp-color;
 }
+
 .access-right {
     margin-top: 20px;
     width: 200px;
@@ -88,56 +104,81 @@
 }
 
 .form-control::placeholder {
-    /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: gray;
     opacity: 1;
-    /* Firefox */
 }
 
 .form-control:-ms-input-placeholder {
-    /* Internet Explorer 10-11 */
     color: rgba(243, 165, 42, 0.4);
 }
 
 .form-control::-ms-input-placeholder {
-    /* Microsoft Edge */
     color: rgba(243, 165, 42, 0.4);
 }
 
 .login-button {
-    // background: linear-gradient(to right, $shopapp-tint-color, $shopapp-color);
-    // color: black;
+    background: linear-gradient(to right, $shopapp-tint-color, $shopapp-color);
     border-radius: 30px;
     width: 100%;
     padding: 10px 0;
     margin-top: 20px;
     border: none;
     font-weight: 500;
+    color: white; /* Đảm bảo văn bản có thể nhìn thấy rõ */
+    cursor: pointer;
 }
+
 .divider {
     height: 1px;
     background-color: rgb(243, 165, 42);
-    /* background-color: rgb(105, 244, 181) */
-    margin: 20px;
+    margin: 20px 0;
 }
+
 label {
     font-weight: bold;
 }
 
-
 .btn-google {
-    // display: flex;
     align-items: center;
     justify-content: center;
     background-color: #DB4437; /* Màu của Google */
-    color: rgb(255, 255, 255);
+    color: white;
     border: none;
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
-  }
+    display: flex;
+    width: 100%; /* Đảm bảo button có chiều rộng phù hợp */
+}
 
-  .btn-google:hover {
+.btn-google:hover {
     background-color: #cc3127; /* Màu hover */
-  }
+}
+
+.btn-facebook {
+    background-color: #3b5998; /* Màu của Facebook */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    width: 100%; /* Đảm bảo button có chiều rộng phù hợp */
+}
+
+.btn-facebook:hover {
+    background-color: #2d4373; /* Màu hover */
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px; /* Thêm khoảng cách giữa các nút */
+    margin-top: 20px;
+}
+
+.button-group .btn-google, .button-group .btn-facebook {
+    flex: 1; /* Đảm bảo các nút có chiều rộng bằng nhau */
+}

@@ -5,8 +5,10 @@ import { UserService } from '../../services/user.service';
 import { RegisterDTO } from '../../dtos/user/register.dto';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { HeaderComponent } from '../header/header.component';
+import { FooterComponent } from '../footer/footer.component';
 import { ApiResponse } from '../../responses/api.response';
-import {  HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-register',
@@ -16,6 +18,8 @@ import {  HttpErrorResponse } from '@angular/common/http';
   imports: [
     CommonModule,
     FormsModule,
+    HeaderComponent,
+    FooterComponent
   ]
 })
 export class RegisterComponent {
@@ -43,6 +47,16 @@ export class RegisterComponent {
     //inject
 
   }
+  onPhoneNumberChange() {
+    console.log(`Phone typed: ${this.phoneNumber}`);
+    // Cập nhật kiểm tra số điện thoại: ít nhất 6 ký tự
+    if (this.phoneNumber.length < 6) {
+      this.registerForm.form.controls['phoneNumber'].setErrors({ 'invalidPhone': true });
+    } else {
+      this.registerForm.form.controls['phoneNumber'].setErrors(null);
+    }
+  }
+  
   Tologin() {
     this.router.navigate(['/login']); 
   }
@@ -54,7 +68,7 @@ export class RegisterComponent {
                     `fullName: ${this.fullName}`+
                     `isAccepted: ${this.isAccepted}`+
                     `dateOfBirth: ${this.dateOfBirth}`;
-    console.error(message);
+    //console.error(message);
     debugger
     
     const registerDTO:RegisterDTO = {
@@ -91,14 +105,18 @@ export class RegisterComponent {
     this.showPassword = !this.showPassword;
   }
   //how to check password match ?
-  checkPasswordsMatch() {    
-    if (this.password !== this.retypePassword) {
-      this.registerForm.form.controls['retypePassword']
-            .setErrors({ 'passwordMismatch': true });
-    } else {
-      this.registerForm.form.controls['retypePassword'].setErrors(null);
+  checkPasswordsMatch() {
+    const retypePasswordControl = this.registerForm?.form?.controls['retypePassword'];
+    
+    if (retypePasswordControl) {
+      if (this.password !== this.retypePassword) {
+        retypePasswordControl.setErrors({ 'passwordMismatch': true });
+      } else {
+        retypePasswordControl.setErrors(null);
+      }
     }
   }
+  
   checkAge() {
     if (this.dateOfBirth) {
       const today = new Date();
