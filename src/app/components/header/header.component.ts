@@ -97,6 +97,9 @@ export class HeaderComponent implements OnInit {
       this.itemsPerPage
     );
   }
+  toHomePage() {
+    this.router.navigate(['/']);
+  }
   getCategories(page: number, limit: number) {
     this.categoryService.getCategories(page, limit).subscribe({
       next: (apiResponse: ApiResponse) => {
