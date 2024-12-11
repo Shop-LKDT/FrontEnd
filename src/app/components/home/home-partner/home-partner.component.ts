@@ -1,4 +1,4 @@
-import { Partner } from './../../../Data/partner';
+import { Partner } from '../../../../Data/partner';
 import { CUSTOM_ELEMENTS_SCHEMA, Component, ViewEncapsulation, NgModule, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';

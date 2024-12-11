@@ -44,29 +44,29 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 export class HomeComponent implements OnInit {
   userResponse?:UserResponse | null;
   isPopoverOpen = false;
-  registerDto: RegisterDTO = {
-    fullname : '',
-    phone_number : '',
-    password : 'aaaaaaaaaaaaaaaaa',
-    retype_password : 'aaaaaaaaaaaaaaaaa',
-    address : '',
-    date_of_birth: new Date(),
-    role_id: 1,
-    google_account_id: 0,
-    facebook_account_id: 0,
-    email: '',
-  };
+  // registerDto: RegisterDTO = {
+  //   fullname : '',
+  //   phone_number : '',
+  //   password : 'aaaaaaaaaaaaaaaaa',
+  //   retype_password : 'aaaaaaaaaaaaaaaaa',
+  //   address : '',
+  //   date_of_birth: new Date(),
+  //   role_id: 1,
+  //   google_account_id: 0,
+  //   facebook_account_id: 0,
+  //   email: '',
+  // };
 
-  loginDTO: LoginDTO = {
-    phone_number: '',
-    password: '',
-    email: '',
-    role_id: 1,
-  }
+  // loginDTO: LoginDTO = {
+  //   phone_number: '',
+  //   password: '',
+  //   email: '',
+  //   role_id: 1,
+  // }
 
-  idEmail: number = 0;
-  typeRequest: string ='';
-  avatar: string = '';
+  // idEmail: number = 0;
+  // typeRequest: string ='';
+  // avatar: string = '';
 
   activeNavItem: number = 0;
   products: Product[] = [];
@@ -88,9 +88,9 @@ export class HomeComponent implements OnInit {
     private productService: ProductService,
     private categoryService: CategoryService,
     private router: Router,
-    private tokenService: TokenService,
+    // private tokenService: TokenService,
     private userService: UserService,
-    private route: ActivatedRoute,
+    // private route: ActivatedRoute,
 
 
     @Inject(DOCUMENT) private document: Document
@@ -102,105 +102,105 @@ export class HomeComponent implements OnInit {
       this.currentPage = Number(this.localStorage?.getItem('currentProductPage')) || 0;
       this.getProducts(this.keyword, this.selectedCategoryId, this.currentPage, this.itemsPerPage);
       this.getCategories(0, 100);
-      console.log("104"+this.userResponse?.fullname);
-      this.route.queryParams.subscribe(params => {
-        this.idEmail = params['id'];
-        this.typeRequest = params['type'];
-      });
-      if (this.idEmail){
-        this.loginGmail()
-      }
+      // console.log("104"+this.userResponse?.fullname);
+      // this.route.queryParams.subscribe(params => {
+      //   this.idEmail = params['id'];
+      //   this.typeRequest = params['type'];
+      // });
+      // if (this.idEmail){
+      //   this.loginGmail()
+      // }
     }
-    loginGmail( ){
-      if (this.typeRequest == "email"){
-        this.registerDto.google_account_id = 1;
-        this.userService.getGoogleUserInfo(this.idEmail).subscribe({
-          next: (response: any) =>{
-            this.avatar = response.picture;
-            this.registerDto.email = response.email;
-            this.registerDto.fullname = response.name;
-            this.registerDto.date_of_birth = response.date_of_birth;
-            // this.registerDto.password = this.userProfileForm.get('password')?.value;
-            // this.registerDto.address = this.userProfileForm.get('address')?.value;
-            // this.registerDto.phone_number = this.userProfileForm.get('phone_number')?.value;
-            // this.registerDto.avatar = this.avatar;
-            // this.registerDto.retype_password = this.registerDto.password;
+    // loginGmail( ){
+    //   if (this.typeRequest == "email"){
+    //     this.registerDto.google_account_id = 1;
+    //     this.userService.getGoogleUserInfo(this.idEmail).subscribe({
+    //       next: (response: any) =>{
+    //         this.avatar = response.picture;
+    //         this.registerDto.email = response.email;
+    //         this.registerDto.fullname = response.name;
+    //         this.registerDto.date_of_birth = response.date_of_birth;
+    //         // this.registerDto.password = this.userProfileForm.get('password')?.value;
+    //         // this.registerDto.address = this.userProfileForm.get('address')?.value;
+    //         // this.registerDto.phone_number = this.userProfileForm.get('phone_number')?.value;
+    //         // this.registerDto.avatar = this.avatar;
+    //         // this.registerDto.retype_password = this.registerDto.password;
 
-            this.userService.register(this.registerDto).subscribe({
-              next: (response: any) => {
-                this.loginDTO.phone_number = this.registerDto.phone_number;
-                this.loginDTO.password = this.registerDto.password;
-                this.loginDTO.email = this.registerDto.email;
-                this.userService.login(this.loginDTO)
-                  .subscribe({
-                    next: (response: LoginResponse) => {
-                      const {token}  =  response
-                      this.tokenService.setToken(token);
-                      this.userService.getUserDetail(token).subscribe({
-                        next: (userDetail: any) =>{
-                          this.userResponse = {
-                            ...userDetail,
-                            date_of_birth: new Date(userDetail.date_of_birth)
-                          };
-                          // this.userService.saveUserResponseToLocalStorage(this.userResponse);
-                          //   if (this.userResponse?.role.name == 'admin'){
-                          //     this.router.navigate(['/admin']);
-                          //   } else if (this.userResponse?.role.name == 'user') {
-                          //     this.router.navigate(['/']);
-                          //   }
-                        },
-                        complete: () => {
-                          debugger
-                        },
-                        error: (error : any) => {
-                          debugger
-                        }
-                      })
+    //         this.userService.register(this.registerDto).subscribe({
+    //           next: (response: any) => {
+    //             this.loginDTO.phone_number = this.registerDto.phone_number;
+    //             this.loginDTO.password = this.registerDto.password;
+    //             this.loginDTO.email = this.registerDto.email;
+    //             this.userService.login(this.loginDTO)
+    //               .subscribe({
+    //                 next: (response: LoginResponse) => {
+    //                   const {token}  =  response
+    //                   this.tokenService.setToken(token);
+    //                   this.userService.getUserDetail(token).subscribe({
+    //                     next: (userDetail: any) =>{
+    //                       this.userResponse = {
+    //                         ...userDetail,
+    //                         date_of_birth: new Date(userDetail.date_of_birth)
+    //                       };
+    //                       // this.userService.saveUserResponseToLocalStorage(this.userResponse);
+    //                       //   if (this.userResponse?.role.name == 'admin'){
+    //                       //     this.router.navigate(['/admin']);
+    //                       //   } else if (this.userResponse?.role.name == 'user') {
+    //                       //     this.router.navigate(['/']);
+    //                       //   }
+    //                     },
+    //                     complete: () => {
+    //                       debugger
+    //                     },
+    //                     error: (error : any) => {
+    //                       debugger
+    //                     }
+    //                   })
 
-                  }
-                })
-              }
-            })
+    //               }
+    //             })
+    //           }
+    //         })
 
-          }
-        })
+    //       }
+    //     })
 
 
-      }
-    }
+    //   }
+    // }
 
-    togglePopover(event: Event): void {
-      event.preventDefault();
-      this.isPopoverOpen = !this.isPopoverOpen;
-    }
-    handleItemClick(index: number): void {
-      //console.error(`Clicked on "${index}"`);
-      if(index === 0) {
-        debugger
-        this.router.navigate(['/user-profile']);
-      }
-      else if(index === 1) {
-        debugger
-        this.router.navigate(['/my-ordered']);
-      }
-      else if (index === 2) {
-        this.userService.removeUserFromLocalStorage();
-        this.tokenService.removeToken();
-        this.userResponse = this.userService.getUserResponseFromLocalStorage();
-        this.router.navigate(['/login']);
+    // togglePopover(event: Event): void {
+    //   event.preventDefault();
+    //   this.isPopoverOpen = !this.isPopoverOpen;
+    // }
+    // handleItemClick(index: number): void {
+    //   //console.error(`Clicked on "${index}"`);
+    //   if(index === 0) {
+    //     debugger
+    //     this.router.navigate(['/user-profile']);
+    //   }
+    //   else if(index === 1) {
+    //     debugger
+    //     this.router.navigate(['/my-ordered']);
+    //   }
+    //   else if (index === 2) {
+    //     this.userService.removeUserFromLocalStorage();
+    //     this.tokenService.removeToken();
+    //     this.userResponse = this.userService.getUserResponseFromLocalStorage();
+    //     this.router.navigate(['/login']);
 
-      }
-      this.isPopoverOpen = false; // Close the popover after clicking an item
-    }
-    setActiveNavItem(index: number) {
-      this.activeNavItem = index;
-      //console.error(this.activeNavItem);
-    }
-    FavoriteProduct(){
-      console.log('Favorite clicked');
+    //   }
+    //   this.isPopoverOpen = false; // Close the popover after clicking an item
+    // }
+    // setActiveNavItem(index: number) {
+    //   this.activeNavItem = index;
+    //   //console.error(this.activeNavItem);
+    // }
+    // FavoriteProduct(){
+    //   console.log('Favorite clicked');
 
-      this.router.navigate(['/favorite']);
-    }
+    //   this.router.navigate(['/favorite']);
+    // }
     getCategories(page: number, limit: number) {
       this.categoryService.getCategories(page, limit).subscribe({
         next: (apiResponse: ApiResponse) => {

@@ -47,10 +47,16 @@ export class RegisterComponent {
     //inject
 
   }
-  onPhoneNumberChange(){
-    console.log(`Phone typed: ${this.phoneNumber}`)
-    //how to validate ? phone must be at least 6 characters
+  onPhoneNumberChange() {
+    console.log(`Phone typed: ${this.phoneNumber}`);
+    // Cập nhật kiểm tra số điện thoại: ít nhất 6 ký tự
+    if (this.phoneNumber.length < 6) {
+      this.registerForm.form.controls['phoneNumber'].setErrors({ 'invalidPhone': true });
+    } else {
+      this.registerForm.form.controls['phoneNumber'].setErrors(null);
+    }
   }
+  
   Tologin() {
     this.router.navigate(['/login']); 
   }
@@ -99,14 +105,18 @@ export class RegisterComponent {
     this.showPassword = !this.showPassword;
   }
   //how to check password match ?
-  checkPasswordsMatch() {    
-    if (this.password !== this.retypePassword) {
-      this.registerForm.form.controls['retypePassword']
-            .setErrors({ 'passwordMismatch': true });
-    } else {
-      this.registerForm.form.controls['retypePassword'].setErrors(null);
+  checkPasswordsMatch() {
+    const retypePasswordControl = this.registerForm?.form?.controls['retypePassword'];
+    
+    if (retypePasswordControl) {
+      if (this.password !== this.retypePassword) {
+        retypePasswordControl.setErrors({ 'passwordMismatch': true });
+      } else {
+        retypePasswordControl.setErrors(null);
+      }
     }
   }
+  
   checkAge() {
     if (this.dateOfBirth) {
       const today = new Date();

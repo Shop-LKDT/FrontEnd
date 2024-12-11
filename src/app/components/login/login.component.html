@@ -1,91 +1,62 @@
+<app-header></app-header>
+<div class="container mx-auto mt-24 mb-10">
+    <div class="flex justify-center">
+        <div class="w-full max-w-md p-6 bg-gray-800 text-white rounded-lg border border-gray-600">
+            <h1 class="text-center text-3xl text-orange-400 mb-6">Login</h1>
+            <div class="mb-6">
+                <label for="phoneNumber" class="block font-bold mb-2">Phone Number</label>
+                <input type="text" id="phoneNumber" 
+                    class="w-full p-2 bg-transparent border-b-2 border-white focus:outline-none focus:border-transparent text-white"
+                    [(ngModel)]="phoneNumber" 
+                    (input)="onPhoneNumberChange()" 
+                    name="phone"
+                    (focus)="loginForm.form.markAsTouched()">
+                <div class="border-t-2 border-transparent mt-2"></div>
+            </div>
 
-<div class="container">
-    <div class="row">
-        <div class="" style="
-        margin-left: 15%;
-    ">
-            <div class="" style="border: 1px solid;
-            padding: 30px;
-            border-radius: 10px;
-            width: 1000px;
-            height: 720px;">
-                <h4 class="h1" style="font-weight: 600;
-                line-height: 20px;
-                margin-top: 20px;
-                margin-bottom: 50px;
-                text-align: center;">ĐĂNG NHẬP HOẶC TẠO TÀI KHOẢN</h4>
-                <div class="form-group">
-                    <label for="phoneNumber" style="font-size: 20px;">Email Hoặc Số Điện Thoại</label>
-                    <input style="border: 1px solid black;" type="text" class="form-control"
-                        [(ngModel)]="phoneNumber"
-                            (input)="onPhoneNumberChange()"
-                            name="phone"
-                            (focus)="loginForm.form.markAsTouched()"
-                    id="phoneNumber" placeholder="Nhập email hoặc số điện thoại">
-                    <div class="divider-nospace"></div>
+            <div class="mb-6">
+                <label for="password" class="block font-bold mb-2">Password</label>
+                <input type="{{ showPassword ? 'text' : 'password' }}" 
+                    id="password" 
+                    class="w-full p-2 bg-transparent border-b-2 border-white focus:outline-none focus:border-transparent text-white" 
+                    [(ngModel)]="password" 
+                    name="password" 
+                    placeholder="At least 3 characters">
+                <i class="password-toggle absolute top-1/2 right-3 transform -translate-y-1/2 text-orange-400 cursor-pointer" 
+                    [ngClass]="showPassword ? 'fa-eye' : 'fa-eye-slash'" 
+                    (click)="togglePassword()"></i>
+                <div class="border-t-2 border-transparent mt-2"></div>
+            </div>
+
+            <div class="flex justify-between items-center mb-6">
+                <div class="flex items-center text-orange-400">
+                    <input type="checkbox" id="remember" 
+                        class="form-checkbox mr-2" 
+                        [(ngModel)]="rememberMe">
+                    <label for="remember" class="text-start">Remember to sign in</label>
                 </div>
-                <div class="form-group password-field" >
-                    <label for="password" style="font-size: 20px;">Mật khẩu</label>
-                    <input style="border: 1px solid black;" type="{{ showPassword ? 'text' : 'password' }}"
-                        [(ngModel)]="password"
-                        name="password"
-                        placeholder="Nhập mật khẩu"
-                        class="form-control" id="password">
-                    <i style="color: black; margin-top: 15px;" class="password-toggle fas" [ngClass]="showPassword ?
-                        'fa-eye' : 'fa-eye-slash'" (click)="togglePassword()"></i>
-                    <!-- <div class="divider-nospace"></div> -->
-                </div>
-                <div class="form-group">
-                    <div class="form-check checkbox-text">
-                      <span style="display: flex;">
-                        <input type="checkbox"
-                            class="form-check-input"
-                            id="remember"
-                            [(ngModel)]="rememberMe">
-                        <label style="color: black;" class="form-check-label text-start" for="remember">
-                            Ghi nhớ tài khoản</label>
-                      </span>
-                      <!-- <a href="#" style="color: black;" class="register-link">Quên mật khẩu?</a> -->
-                    </div>
-                  </div>
+                <a href="#" class="text-blue-500 hover:text-orange-400">Forgot password</a>
+            </div>
 
-                <!-- <div class="form-group">
-                    <select class="form-control access-right"
-                        [(ngModel)]="selectedRole">
-                        <option selected disabled>Login Role</option>
-                        @for(role of roles; track role.name) {
-                            <option [ngValue]="role">
-                                {{ role.name }}
-                            </option>
-                        }
-                    </select>
-                  </div> -->
+            <button 
+                type="button" 
+                class="w-full p-3 bg-gradient-to-r from-yellow-500 to-yellow-400 text-black font-semibold rounded-full mb-6"
+                (click)="login()">Login</button>
 
-                  <button
-                    type="button"
-                    (click)="login()"
-                    class="login-button" style="background-color: #E30019; border-radius: 5px; color: white; margin-bottom: 10px;">Đăng nhập</button>
-                    <h5 style="text-align: center; margin-bottom: 10px;" style="font-size: 20px; text-align: center;margin-bottom: 10px;">Hoặc đăng nhập bằng</h5>
+            <div class="flex justify-between mb-6">
+                <button class="w-full flex items-center justify-center p-3 bg-red-600 text-white rounded-lg mb-2">
+                    <i class="fab fa-google mr-2"></i> Continue with Google
+                </button>
+                <button class="w-full flex items-center justify-center p-3 bg-blue-600 text-white rounded-lg">
+                    <i class="fab fa-facebook mr-2"></i> Continue with Facebook
+                </button>
+            </div>
 
-                    <div class="button-group" style="text-align: center;">
-                        <button class="btn-google" (click)="continueWithGoogle()">
-                          <i class="fab fa-google" style="margin-right: 5px"></i>
-                          Continue with Google
-                        </button>
-                        <!-- <button class="btn-facebook" (click)="continueWithFacebook()">
-                          <i class="fab fa-facebook" style="margin-right: 5px"></i>
-                          Continue with Facebook
-                        </button> -->
-                      </div>
-
-                  <div class="divider"></div>
-                  <p class="text-center" style="font-size: 20px; text-align: center;margin-bottom: 10px;">Bạn chưa có tài khoản? <span>
-                    <a class="register-link"
-                        (click)="createAccount()"style="font-size: 20px; text-align: center;margin-bottom: 10px;"> Đăng ký ngay</a>
-                </span></p>
-
+            <div class="border-t-2 border-orange-400 my-4"></div>
+            <p class="text-center">Not registered? 
+                <span class="text-blue-500 cursor-pointer" (click)="createAccount()">Create new account</span>
+            </p> 
+        </div>
     </div>
-</div>
-</div>
 </div>
 <app-footer></app-footer>
