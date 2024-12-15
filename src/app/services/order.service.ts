@@ -10,15 +10,17 @@ import { environment } from '../../environments/environment';
 import { OrderDTO } from '../dtos/order/order.dto';
 import { OrderResponse } from '../responses/order/order.response';
 import { ApiResponse } from '../responses/api.response';
-
+import { TokenService } from './token.service';
 @Injectable({
   providedIn: 'root',
 })
 export class OrderService {
   private apiUrl = `${environment.apiBaseUrl}/orders`;
   private apiGetAllOrders = `${environment.apiBaseUrl}/orders/get-orders-by-keyword`;
+  private token: string = this.tokenService.getToken(); // Thay bằng token thật hoặc lấy từ service xác thực
 
-  constructor(private http: HttpClient) {}
+
+  constructor(private http: HttpClient, private tokenService: TokenService) {}
 
   placeOrder(orderData: OrderDTO): Observable<ApiResponse> {
     // Gửi yêu cầu đặt hàng
@@ -30,7 +32,12 @@ export class OrderService {
   }
   getOrdersByUserId(userId: number): Observable<ApiResponse> {
     const url = `${environment.apiBaseUrl}/orders/user/${userId}`;
-    return this.http.get<ApiResponse>(url);
+    return this.http.get<ApiResponse>(url, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.token}`,
+      })
+    });
   }
   getAllOrders(keyword:string,
     page: number, limit: number
