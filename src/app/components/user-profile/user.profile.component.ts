@@ -20,7 +20,7 @@ import { FooterComponent } from '../footer/footer.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-
+import {MatTabsModule} from '@angular/material/tabs';
 @Component({
   selector: 'user-profile',
   templateUrl: './user.profile.component.html',
@@ -34,6 +34,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    MatTabsModule
   ],
 })
 export class UserProfileComponent implements OnInit {
