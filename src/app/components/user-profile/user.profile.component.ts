@@ -7,7 +7,8 @@ import {
   ValidatorFn,
   AbstractControl
 } from '@angular/forms';
-
+import { CardProfileComponent } from './card-profile/card-profile.component';
+import { CardSettingComponent } from './card-setting/card-setting.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { TokenService } from '../../services/token.service';
@@ -19,7 +20,7 @@ import { FooterComponent } from '../footer/footer.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-
+import {MatTabsModule} from '@angular/material/tabs';
 @Component({
   selector: 'user-profile',
   templateUrl: './user.profile.component.html',
@@ -27,10 +28,13 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
   standalone: true,
   imports: [
     FooterComponent,
+    CardProfileComponent,
+    CardSettingComponent,
     HeaderComponent,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    MatTabsModule
   ],
 })
 export class UserProfileComponent implements OnInit {
@@ -106,9 +110,6 @@ export class UserProfileComponent implements OnInit {
       this.userService.updateUserDetail(this.token, updateUserDTO)
         .subscribe({
           next: (response: any) => {
-            this.userService.removeUserFromLocalStorage();
-            this.tokenService.removeToken();
-            this.router.navigate(['/login']);
           },
           error: (error: HttpErrorResponse) => {
             debugger;
