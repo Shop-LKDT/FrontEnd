@@ -20,6 +20,7 @@ import { cpSync } from 'fs';
 })
 export class InventoryComponent implements OnInit {
   warehouses: any[] = [];
+  city: string = '';
   productNotInWareHouse: any[] = [];
   idToDelete: number | null = null; // Lưu ID của sản phẩm cần xóa
   selectedInventory: any = null;
@@ -31,7 +32,7 @@ export class InventoryComponent implements OnInit {
   pageSize: number = 6;  // The maximum number of pages
   totalPages: number = Math.ceil(this.totalinventorys / this.inventorysPerPage);  // Total pages
   inventoryForm: FormGroup;
-  selectedWarehouse: Warehouse = { id: 0, name: '', location: '', createdAt: [], updatedAt: [] };
+  selectedWarehouse: Warehouse = { id: 0, name: '', location: '', latitude: 0,longitude:0,  createdAt: [], updatedAt: [] };
   selectedProduct: any;
   selectedQuantity: number = 0;
   warehouseProduct: WarehouseProduct = { warehouseId: 0, productId: 0, quantity: 0 };
@@ -77,7 +78,7 @@ export class InventoryComponent implements OnInit {
     );
   }
   getAllWarehouse(): void {
-    this.warehouseService.getAllWarehouses().subscribe(
+    this.warehouseService.getAllWarehouses(this.city).subscribe(
       (response: ApiResponse) => {
         if (response.data) {
           this.warehouses = response.data;  // Assuming 'data' contains the list of warehouses
