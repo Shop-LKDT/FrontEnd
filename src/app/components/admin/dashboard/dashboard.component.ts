@@ -10,6 +10,7 @@ import {
   ViewChild,
   OnInit,
 } from '@angular/core';
+import { CardLineChartComponent } from '../chart/card-line-chart/card-line-chart.component';
 
 import { Chart, registerables } from 'chart.js'; //npm install chart.js
 import { UserService } from '../../../services/user.service';
@@ -27,6 +28,8 @@ Chart.register(...registerables);
     CurrencyPipe,
     AdminNavbarComponent,
     HeaderStatsComponent,
+    CardLineChartComponent
+
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
